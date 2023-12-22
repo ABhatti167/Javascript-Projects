@@ -1,61 +1,38 @@
-:root {
-
-}
 body {
-    padding: 0;
-    margin: 0;
-    background-color: white;
-}
-header {
     display: flex;
-    background-color: rgb(210, 210, 211);
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    margin: 0;
-}
-header h1 {
-    display: inline;
-    transition: color box-shadow 0.2s ease-in-out;
-}
-
-header h1:hover {
-    color: aquamarine;
-    text-shadow: 10px 0px 10px aquamarine;
-    cursor: pointer;
-}
-
-#button {
-    background-color: aliceblue;
-    border-radius: 10px;
-    height: 100px;
-    width: 200px;
-    font-size: 30px;
-}
-#colorInfo {
-    background-color: black;
-    display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 600px;
-    height: 200px;
-    border-radius: 10px;
-    margin: 20px;
+    background-color: azure;
 }
-.displayColor {
-    color: white;
-    font-weight: bold;
-}
-#display {
-    width: 100%;
-    height: 1000px;
+#gameContainer {
     display: flex;
     flex-direction: column;
-    justify-content: baseline;
+    width: 700px;
+    height: 900px;
+    justify-content: center;
     align-items: center;
-    background-color: white;
+    background: linear-gradient(to top right, rgb(236, 236, 236), rgb(153, 225, 247));
+    border-radius: 15px;
 }
-#display h1 {
-    font-size: 40px;
+#game {
+    border: 5px solid rgb(114, 114, 114);
+    
+    background-color: white;
+    border-radius: 10px;
+}
+.score {
+    font-size: 50px;
+    text-align: center;
+    display: inline-block;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+#reset {
+    width: 125px;
+    height: 60px;
+    justify-self: center;
+    border-radius: 15px;
+    background-color: rgb(222, 222, 222);
+    border: 10px solid gray;
+    font-size: larger;
+    font-weight: bolder;
 }

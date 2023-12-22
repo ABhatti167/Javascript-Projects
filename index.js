@@ -1,67 +1,181 @@
-const button = document.getElementById('button')
-let colorCode = document.querySelector("#color")
-let bodyBG = document.getElementsByTagName('body')
-let displayDiv = document.getElementById("display")
-let simpleHex = document.getElementById("simpleHex")
-simpleRGB = document.getElementById("rgb")
+const score = document.getElementById("tracker")
+const reset = document.getElementById("reset")
+const gameBoard = document.getElementById("game")
 
-let option = 'rgb'
+const ctx = gameBoard.getContext("2d")
 
-let color = {
-    hex: "#000000",
-    rgb: 'rgb(255,0,255)'
+const gameWidth = gameBoard.width;
+const gameHeight = gameBoard.height;
+
+const boardBackground = "white"
+const snakeColor = "lightgreen"
+const foodColor = "red"
+const snakeBorder = "black"
+
+const unitSize = 25
+
+let running = false
+let xVelocity = unitSize
+let yVelocity = 0
+let foodX;
+let foodY;
+
+let scorenum = 0;
+
+let snake = [
+    {x:0,y:0},
+    { x: unitSize * 1, y: 0 },
+    { x: unitSize * 2, y: 0 },
+    { x: unitSize * 3, y: 0 },
+    { x: unitSize * 4, y: 0 },
+]
+
+window.addEventListener('keydown', changeDirection)
+
+reset.addEventListener('click', () => {
+    scorenum = 0;
+    xVelocity = unitSize
+    yVelocity = 0
+    snake = [{ x: 0, y: 0 },
+        { x: unitSize * 1, y: 0 },
+        { x: unitSize * 2, y: 0 },
+        { x: unitSize * 3, y: 0 },
+        { x: unitSize * 4, y: 0 },
+    ]
+    running = true
+    gameStart()
+})
+
+gameStart()
+
+function gameStart() {
+
+    running = true
+    score.textContent = scorenum
+    createFood()
+    drawFood()
+    nextTick()
 }
+function nextTick() {
 
-function setColor() {
-    bodyBG.backgroundColor = color.rgb
-    displayDiv.style.backgroundColor = color.rgb
-    if (option == 'rgb') {
-    colorCode.textContent = color.rgb.substring(3)
+    if (running) {
+        setTimeout(() => {
+            clearBoard()
+            drawFood()
+            moveSnake()
+            drawSnake()
+            checkGameOver()
+            nextTick()
+        },75)
     } else {
-        colorCode.textContent = color.hex
+        displayGameOver()
+    }
+}
+function clearBoard() {
+    ctx.fillStyle = boardBackground
+    ctx.fillRect(0,0,gameWidth,gameHeight)
+}
+
+function createFood() {
+
+    function randomFood(min,max) {
+        let randNum = Math.round((Math.random() * (max-min) + min) / unitSize) * unitSize
+        return randNum
+    }
+    foodX = randomFood(0, (gameWidth - unitSize))
+    foodY = randomFood(0, (gameHeight - unitSize))
+    console.log(foodX)
+    console.log(foodY)
+}
+
+function drawFood() {
+
+    ctx.fillStyle = foodColor
+    ctx.fillRect(foodX,foodY, unitSize,unitSize)
+}
+function moveSnake() {
+    const head = {
+        x: (snake[0].x + xVelocity),
+        y: (snake[0].y + yVelocity)
+    }
+    snake.unshift(head)
+    if (snake[0].x == foodX && snake[0].y == foodY) {
+        scorenum+=1
+        score.textContent = scorenum
+        createFood()
+    } else {
+        snake.pop()
+    }
+}
+function drawSnake() {
+    ctx.fillStyle = snakeColor
+    ctx.strokeStyle = snakeBorder
+    snake.forEach(snakepart => {
+        ctx.fillRect(snakepart.x,snakepart.y, unitSize, unitSize)
+        ctx.strokeRect(snakepart.x, snakepart.y, unitSize, unitSize)
+    })
+}
+function checkGameOver() {
+    switch(true) {
+        case(snake[0].x > gameWidth):
+            running = false;
+        break;
+        case (snake[0].x < 0):
+            running = false;
+            break;
+        case (snake[0].y > gameHeight):
+            running = false;
+            break;
+        case (snake[0].y < 0):
+            running = false;
+            break;
+    }
+    for (let i = 1; i < snake.length; i++) {
+        if (snake[i].x == snake[0] && snake[i].y == snake[0]) {
+            running = false;
+        }
+    }
+}
+function displayGameOver() {
+    ctx.font = "50px MV Boli"
+    ctx.fillStyle = "red"
+    ctx.textAlign = 'center'
+    ctx.fillText("GameOver",gameWidth/2,gameHeight/2)
+    running = false
+}
+function changeDirection(event) {
+    const keyPressed = event.keyCode
+    console.log(keyPressed)
+    const LEFT = 37
+    const RIGHT = 39
+    const UP = 38
+    const DOWN = 40
+
+    const goingUp = (yVelocity == -unitSize)
+    const goingDown = (yVelocity == unitSize)
+    const goingLeft = (xVelocity == -unitSize)
+    const goingRight = (xVelocity == unitSize)
+
+    switch (true) {
+        case (keyPressed == LEFT && !goingRight):
+        xVelocity = -unitSize
+        yVelocity = 0
+        break;
+        case (keyPressed == UP && !goingDown):
+            yVelocity = -unitSize
+            xVelocity = 0
+            break;
+        case (keyPressed == DOWN && !goingUp):
+            yVelocity = unitSize
+            xVelocity = 0
+            break;
+        case (keyPressed == RIGHT && !goingLeft):
+            xVelocity = unitSize
+            yVelocity = 0
+            break;
+        default:
+            break;
     }
 }
 
-function randomize() {
-
-    let q1 = Math.round(Math.random() * 255) + 1
-    let q2 = Math.round(Math.random() * 255) + 1
-    let q3 = Math.round(Math.random() * 255) + 1
-    return `rgb(${q1},${q2},${q3})`
-}
-
-function rgbToHex(rgb) {
-    var hex = Number(rgb).toString(16);
-    if (hex.length < 2) {
-        hex = "0" + hex;
-    }
-    return hex;
-}
-
-function update() {
-    color.rgb = randomize()
-    let rgbs = color.rgb.split(',')
-    let r1 = rgbs[0].substring(4)
-    let r2 = rgbs[1]
-    let r3 = rgbs[2].substring(0, (rgbs[2].length - 1))
-    color.hex = "#" + rgbToHex(r1) + rgbToHex(r2) + rgbToHex(r3)
-}
-
-setColor()
-
-button.addEventListener("click", () => {
-    update()
-    setColor()
-})
-
-simpleHex.addEventListener('click', () => {
-    option = 'hex'
-    setColor()
-})
-
-
-simpleRGB.addEventListener('click', () => {
-    option = 'rgb'
-    setColor()
-})
 

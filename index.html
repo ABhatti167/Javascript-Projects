@@ -7,15 +7,13 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <header><h1 id="rgb">RGB Flipper</h1> <h1 id="simpleHex">Simple Hex</h1></header>
-    
-
-    <div id="display">
-    <div id="colorInfo"> 
-        <h1 class="displayColor">Background: </h1>
-        <h2 class="displayColor" id="color">#ffffff</h2>
+    <div id="gameContainer">
+    <canvas id="game" width="600px" height="600px"></canvas>
+    <div>
+    <h1 class="score">Score:  </h1>
+    <h1 class="score" id="tracker">0</h1>
     </div>
-    <button id="button">Click Me!</button>
+    <button id="reset">Reset</button>
     </div>
     <script src="index.js"></script>
 </body>
