@@ -1,61 +1,43 @@
-:root {
-
-}
 body {
-    padding: 0;
-    margin: 0;
-    background-color: white;
-}
-header {
     display: flex;
-    background-color: rgb(210, 210, 211);
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    margin: 0;
+    justify-content: center;
 }
-header h1 {
-    display: inline;
-    transition: color box-shadow 0.2s ease-in-out;
-}
+#rps {
 
-header h1:hover {
-    color: aquamarine;
-    text-shadow: 10px 0px 10px aquamarine;
-    cursor: pointer;
-}
-
-#button {
-    background-color: aliceblue;
-    border-radius: 10px;
-    height: 100px;
-    width: 200px;
-    font-size: 30px;
-}
-#colorInfo {
-    background-color: black;
-    display: flex;
-    flex-direction: row;
+    width: 750px;
+    height: 500px;
+    background-color: rgb(138, 138, 138);
+    border: 5px solid black;
+    border-radius: 15px;
+    display: flex;  
     justify-content: center;
     align-items: center;
-    width: 600px;
-    height: 200px;
-    border-radius: 10px;
-    margin: 20px;
-}
-.displayColor {
-    color: white;
-    font-weight: bold;
-}
-#display {
-    width: 100%;
-    height: 1000px;
-    display: flex;
     flex-direction: column;
-    justify-content: baseline;
-    align-items: center;
-    background-color: white;
 }
-#display h1 {
-    font-size: 40px;
+
+#buttons {
+    width: 600px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    padding: 0px;
+}
+
+.choice {
+    margin: 20px;
+    width: 170px;
+    height: 70px;
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(100, 100, 100);
+}
+
+#player {
+    color: blue;
+}
+#com {
+    color: red;
+}
+
+.text {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

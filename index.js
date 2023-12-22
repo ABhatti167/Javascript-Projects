@@ -1,67 +1,55 @@
-const button = document.getElementById('button')
-let colorCode = document.querySelector("#color")
-let bodyBG = document.getElementsByTagName('body')
-let displayDiv = document.getElementById("display")
-let simpleHex = document.getElementById("simpleHex")
-simpleRGB = document.getElementById("rgb")
+const player = document.querySelector("#player")
+const com = document.querySelector("#com")
+const result = document.querySelector("#result")
 
-let option = 'rgb'
+const rock = document.querySelector("#rock")
+const paper = document.querySelector("#paper")
+const scissors = document.querySelector("#scissors")
 
-let color = {
-    hex: "#000000",
-    rgb: 'rgb(255,0,255)'
-}
+const Rock = document.querySelector("#rock").textContent
+const Paper = document.querySelector("#paper").textContent
+const Scissors = document.querySelector("#scissors").textContent
 
-function setColor() {
-    bodyBG.backgroundColor = color.rgb
-    displayDiv.style.backgroundColor = color.rgb
-    if (option == 'rgb') {
-    colorCode.textContent = color.rgb.substring(3)
-    } else {
-        colorCode.textContent = color.hex
+const choices = document.querySelectorAll(".choice")
+
+let player1;
+let com1;
+
+
+choices.forEach(button => button.addEventListener("click", () => {
+
+    player1 = button.textContent
+    com1 = computerTurn()
+
+    player.textContent = "Player: " + player1
+    com.textContent = "Computer: " + com1
+    
+    result.textContent = displayWinner()
+}))
+
+
+
+
+function displayWinner() {
+    if(player1 == com1) {
+        return "Draw"
+    } else if (player1 == "Rock") {
+        return (com1 == "Paper") ? "Player Wins" : "Computer Wins"
+    } else if (player1 == "Paper") {
+        return (com1 == "Rock") ? "Player Wins" : "Computer Wins"
+    } else if (player1 == "Scissors") {
+        return (com1 == "Paper") ? "Player Wins" : "Computer Wins"
     }
 }
 
-function randomize() {
+function computerTurn() {
+    let value= Math.floor(Math.random() * 3 + 1)
 
-    let q1 = Math.round(Math.random() * 255) + 1
-    let q2 = Math.round(Math.random() * 255) + 1
-    let q3 = Math.round(Math.random() * 255) + 1
-    return `rgb(${q1},${q2},${q3})`
-}
-
-function rgbToHex(rgb) {
-    var hex = Number(rgb).toString(16);
-    if (hex.length < 2) {
-        hex = "0" + hex;
+    if (value == 1) {
+        return "Rock"
+    } else if (value == 2) {
+        return 'Paper'
+    } else if (value == 3) {
+        return 'Scissors'
     }
-    return hex;
 }
-
-function update() {
-    color.rgb = randomize()
-    let rgbs = color.rgb.split(',')
-    let r1 = rgbs[0].substring(4)
-    let r2 = rgbs[1]
-    let r3 = rgbs[2].substring(0, (rgbs[2].length - 1))
-    color.hex = "#" + rgbToHex(r1) + rgbToHex(r2) + rgbToHex(r3)
-}
-
-setColor()
-
-button.addEventListener("click", () => {
-    update()
-    setColor()
-})
-
-simpleHex.addEventListener('click', () => {
-    option = 'hex'
-    setColor()
-})
-
-
-simpleRGB.addEventListener('click', () => {
-    option = 'rgb'
-    setColor()
-})
-
