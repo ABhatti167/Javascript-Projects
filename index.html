@@ -7,30 +7,21 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div id="calculatorDiv">
-        <div class="output">
-            <div id="previous" data-previous-operand>123</div>
-            <div id="current" data-current-operand>456</div>
-        </div>
-        <button class="spantwo" data-all-clear>AC</button>
-        <button class="calculatorButton" data-delete>DEL</button>
-        <button class="calculatorButton" data-operation>÷</button>
-        <button class="calculatorButton" data-number>1</button>
-        <button class="calculatorButton" data-number>2</button>
-        <button class="calculatorButton" data-number>3</button>
-        <button class="calculatorButton" data-operation>*</button>
-        <button class="calculatorButton" data-number>4</button>
-        <button class="calculatorButton" data-number>5</button>
-        <button class="calculatorButton" data-number>6</button>
-        <button class="calculatorButton" data-operation>+</button>
-        <button class="calculatorButton" data-number>7</button>
-        <button class="calculatorButton" data-number>8</button>
-        <button class="calculatorButton" data-number>9</button>
-        <button class="calculatorButton" data-operation>-</button>
-        <button class="calculatorButton" data-number>.</button>
-        <button class="calculatorButton" data-number>0</button>
-        <button class="spantwo" data-equals>=</button>
+    <div id="gameDiv">
+    <h1 id="title">Pong Game</h1>
+
+    <canvas id="gameContainer" width="700px"
+    height="700px">
+
+    </canvas>
+    <div id="scoreBoard">
+        <h1 class="scores" id="blueScore">0</h1>
+        <h1 class="scores">:</h1>
+        <h1 class="scores" id="redScore">0</h1>
     </div>
+    <button id="reset"> Reset </button>
+    </div>
+
     <script src="index.js"></script>
 </body>
 </html>
